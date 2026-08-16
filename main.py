@@ -5,9 +5,19 @@ from fastapi import FastAPI
 from pydantic import create_model
 import joblib
 import json
+from fastapi.middleware.cors import CORSMiddleware
 
 # initialize FastAPI
 app = FastAPI()
+
+# add CORS middleware to allow requests from frontend to backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # load feature names
 with open("feature_names.json", "r") as f:
