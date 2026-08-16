@@ -24,6 +24,7 @@ class RunRegressionModels:
         self.y = y
         self.X_new = X_new
         self.y_true = y_true
+        self.models = {}
 
     def regression_metrics(self, y_true, y_pred):
         metrics = {}
@@ -34,8 +35,10 @@ class RunRegressionModels:
         metrics['rmse'] = root_mean_squared_error(y_true, y_pred)
         return metrics
     
-    def run_linear_regression(self):
+    def run_linear_regression(self, save_model=False):
         model = LinearRegression().fit(self.X, self.y)
+        if save_model: 
+            self.models['linear_reg'] = model
         y_cv = model.predict(self.X)
         train_metrics = self.regression_metrics(self.y, y_cv)
         self.train_df['linear_reg'] = y_cv
@@ -45,8 +48,10 @@ class RunRegressionModels:
         self.test_df['linear_reg'] = y_pred
         self.test_metrics_all['linear_reg'] = test_metrics
 
-    def run_ridge_regression(self, regularization=0.5):
+    def run_ridge_regression(self, save_model=False, regularization=0.5):
         model = linear_model.Ridge(alpha=regularization).fit(self.X, self.y)
+        if save_model: 
+            self.models['ridge_reg'] = model
         y_cv = model.predict(self.X)
         train_metrics = self.regression_metrics(self.y, y_cv)
         self.train_df['ridge_reg'] = y_cv
@@ -56,8 +61,10 @@ class RunRegressionModels:
         self.test_df['ridge_reg'] = y_pred
         self.test_metrics_all['ridge_reg'] = test_metrics
 
-    def run_ridgecv_regression(self, regularization_range=100):
+    def run_ridgecv_regression(self, save_model=False, regularization_range=100):
         model = linear_model.RidgeCV(alphas=regularization_range).fit(self.X, self.y)
+        if save_model: 
+            self.models['ridgecv_reg'] = model
         y_cv = model.predict(self.X)
         train_metrics = self.regression_metrics(self.y, y_cv)
         self.train_df['ridgecv_reg'] = y_cv
@@ -67,8 +74,10 @@ class RunRegressionModels:
         self.test_df['ridgecv_reg'] = y_pred
         self.test_metrics_all['ridgecv_reg'] = test_metrics
 
-    def run_lasso_regression(self, regularization=0.1):
+    def run_lasso_regression(self, save_model=False, regularization=0.1):
         model = linear_model.Lasso(alpha=regularization).fit(self.X, self.y)
+        if save_model: 
+            self.models['lasso_reg'] = model
         y_cv = model.predict(self.X)
         train_metrics = self.regression_metrics(self.y, y_cv)
         self.train_df['lasso_reg'] = y_cv
@@ -78,8 +87,10 @@ class RunRegressionModels:
         self.test_df['lasso_reg'] = y_pred
         self.test_metrics_all['lasso_reg'] = test_metrics
 
-    def run_lassocv_regression(self, regularization_range=100):
+    def run_lassocv_regression(self, save_model=False, regularization_range=100):
         model = linear_model.LassoCV(alphas=regularization_range).fit(self.X, self.y)
+        if save_model: 
+            self.models['lassocv_reg'] = model
         y_cv = model.predict(self.X)
         train_metrics = self.regression_metrics(self.y, y_cv)
         self.train_df['lassocv_reg'] = y_cv
@@ -89,8 +100,10 @@ class RunRegressionModels:
         self.test_df['lassocv_reg'] = y_pred
         self.test_metrics_all['lassocv_reg'] = test_metrics
 
-    def run_decisiontree_regression(self):
+    def run_decisiontree_regression(self, save_model=False):
         model = tree.DecisionTreeRegressor().fit(self.X, self.y)
+        if save_model: 
+            self.models['decisiontree_reg'] = model
         y_cv = model.predict(self.X)
         train_metrics = self.regression_metrics(self.y, y_cv)
         self.train_df['decisiontree_reg'] = y_cv
@@ -100,8 +113,10 @@ class RunRegressionModels:
         self.test_df['decisiontree_reg'] = y_pred
         self.test_metrics_all['decisiontree_reg'] = test_metrics
 
-    def run_svm_regression(self):
+    def run_svm_regression(self, save_model=False):
         model = svm.SVR().fit(self.X, self.y)
+        if save_model: 
+            self.models['svm_reg'] = model
         y_cv = model.predict(self.X)
         train_metrics = self.regression_metrics(self.y, y_cv)
         self.train_df['svm_reg'] = y_cv
@@ -111,8 +126,10 @@ class RunRegressionModels:
         self.test_df['svm_reg'] = y_pred
         self.test_metrics_all['svm_reg'] = test_metrics
 
-    def run_randomforest_regression(self):
+    def run_randomforest_regression(self, save_model=False):
         model = RandomForestRegressor(max_depth=5, random_state=0).fit(self.X, self.y)
+        if save_model: 
+            self.models['randomforest_reg'] = model
         y_cv = model.predict(self.X)
         train_metrics = self.regression_metrics(self.y, y_cv)
         self.train_df['randomforest_reg'] = y_cv
@@ -122,8 +139,10 @@ class RunRegressionModels:
         self.test_df['randomforest_reg'] = y_pred
         self.test_metrics_all['randomforest_reg'] = test_metrics
 
-    def run_gradboost_regression(self):
+    def run_gradboost_regression(self, save_model=False):
         model = GradientBoostingRegressor(random_state=0).fit(self.X, self.y)
+        if save_model: 
+            self.models['gradboost_reg'] = model
         y_cv = model.predict(self.X)
         train_metrics = self.regression_metrics(self.y, y_cv)
         self.train_df['gradboost_reg'] = y_cv
