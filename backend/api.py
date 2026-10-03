@@ -1,11 +1,11 @@
 # intitialise libraries and packages
-import uvicorn
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import create_model
 import joblib
 import json
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 # initialize FastAPI
 app = FastAPI()
@@ -19,8 +19,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+model_folder_path = os.path.join(os.getcwd(), os.path.join("backend","model"))
+
 # load feature names
-with open("feature_names.json", "r") as f:
+with open(os.path.join(model_folder_path,"feature_names.json"), "r") as f:
     feature_names = json.load(f)
 
 PredictionFeatures = create_model("PredictionFeatures",
@@ -30,16 +32,25 @@ PredictionFeatures = create_model("PredictionFeatures",
     }
 )
 
+# load summary of dataset
+with open(r'C:\Users\nurai\OneDrive\Documents\GitHub\StrokePrediction\summary_dict.json', "r") as f:
+    summary_dict = json.load(f)
+
 # Global variable to store the loaded model
 model = None
 
 # Download the model
 def download_model():
     global model
-    model = joblib.load('stroke_prediction_model.joblib')
+    model = joblib.load(os.path.join(model_folder_path,"stroke_prediction_model.joblib"))
 
 # Download the model immediately when the script runs
 download_model()
+
+# API Root endpoint
+@app.get("/trial-info")
+async def trial_info():
+    return summary_dict
 
 # API Root endpoint
 @app.get("/")
@@ -57,8 +68,5 @@ async def predict(features: PredictionFeatures):
     prediction = model.predict(input_data)[0]
 
     return {
-        "Post-stroke Survival (days)": prediction
+        "Post-stroke Survival (days)": int(prediction)
     }
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)

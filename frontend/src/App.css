@@ -182,3 +182,115 @@
     border-right-color: var(--border);
   }
 }
+
+.dashboard {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+header h1 {
+    margin-bottom: 5px;
+}
+
+header p {
+    color: #666;
+}
+
+.model-status {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: #eee;
+    font-size: 14px;
+}
+
+.intro-card {
+    font-size: 30px;
+    color: black;
+    padding: 25px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.intro-dataset {
+    font-size: 10px;
+    text-align: left;
+}
+
+.dashboard-row {
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    gap: 20px;
+    width: 100%;
+    align-items: stretch;
+}
+
+.trial-card{
+    padding: 5px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.trial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.trial-grid strong {
+    font-size: 14px;
+}
+
+.trial-grid p {
+    margin-top: 5px;
+}
+
+.histogram-card {
+    background: white;
+    border-radius: 12px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    width: 100% / 3;
+}
+
+.histogram-card h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.prediction {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 25px 0;
+}
+
+.prediction-card {
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.outro-card {
+    font-size: 10px;
+    color: black;
+    padding: 25px;
+    margin-bottom: 25px;
+    text-align: left;
+}
