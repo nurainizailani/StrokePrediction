@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": "http://localhost:8000",
-      base: "https://nurainizailani.github.io/StrokePrediction/"
     },
+  base: "https://nurainizailani.github.io/StrokePrediction/"
   },
 });
