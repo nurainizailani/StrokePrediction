@@ -19,7 +19,7 @@ function App() {
 
         api.get("/")
             .then(response => {
-                setApiStatus(response.data.message);
+                setMessage(response.data.message);
             })
             .catch(error => {
                 console.error("API connection error:", error);
@@ -100,25 +100,43 @@ function App() {
         <div className="dashboard">
 
             {(
-                <section className="intro-card">
+                <section className="dataset-card">
 
-                    <strong>
+                    <h1 href="https://datashare.ed.ac.uk/items/95f369ad-17a3-4032-b5ee-2f10b6fd724d">
                         The Third International Stroke Trial (IST-3)
-                    </strong>                    
+                    </h1>                    
+                    <a href="https://datashare.ed.ac.uk/items/95f369ad-17a3-4032-b5ee-2f10b6fd724d">
+                        Source
+                    </a> 
+                    <h2>
+                        Objective
+                    </h2>
+                    <p>
+                        Assess impact of t-PA on stroke patients.
+                    </p>
+                    <h2>
+                        About Dataset 
+                    </h2>
+                    <p>
+                        Stroke patients are enrolled in treatment and control groups of the clinical trial. 
+                        Their individual progress is tracked over 18 months, including 3 and 6 month intervals, monitoring their vitals and status periodically. 
+                        Selected co-morbidities (eg: diabetes) and imaging are also recorded to further augment the dataset.
+                    </p>
+                    <h4>
+                        Citation: Sandercock, P; Wardlaw, J; Lindley, R; Cohen, G; Whiteley, W. (2016). The third International Stroke Trial (IST-3), 2000-2015 [dataset]. University of Edinburgh & Edinburgh Clinical Trials Unit. https://doi.org/10.7488/ds/1350
+                    </h4>                 
 
                 </section>
             )}
 
             <div className="dashboard-row">
 
-                {/* -------------------------------- */}
                 {/* Clinical Trial Information */}
-                {/* -------------------------------- */}
 
                 {trialInfo && (
                     <section className="trial-grid">
                         <div className="trial-card">
-                            <strong>Enrolled Patient Count</strong>
+                            <strong>Patients Enrolled</strong>
                             <p>
                                 {trialInfo.patient_count}
                             </p>
@@ -148,11 +166,6 @@ function App() {
 
                 {trialInfo && trialInfo.ages && (
                     <section className="histogram-card">
-
-                        <h2>
-                            Ages of Enrolled Patients
-                        </h2>
-
                         <Plot
                             data={[
                                 {
@@ -161,38 +174,74 @@ function App() {
                                     nbinsx: 10,
                                     hovertemplate:
                                         "Age: %{x}<br>" +
-                                        "Patients: %{y}<extra></extra>"
+                                        "Patients: %{y}<extra></extra>",
+                                    marker: {
+                                        color: "#057a89",
+                                        
+                                    },
                                 }
                             ]}
+                            
                             layout={{
+                                title: {
+                                    text: "Ages of Enrolled Patients",
+                                    font: {
+                                        color: "#000000",
+                                        weight: "bold",
+                                        family: "Arial, sans-serif"
+
+                                    }
+                                },
+
                                 xaxis: {
-                                    title: "Age"
+                                    title: {
+                                        text: "Age",
+                                        font: {
+                                            color: "#000000",
+                                            size: 14,
+                                            weight: 100,                                        
+                                            family: "Arial, sans-serif"                                         
+                                        },
+                                        standoff: 10
+                                    },
+                                    showticklabels: true,
+                                    tickfont: {
+                                        color: "#000000"
+                                    },
+                                    automargin: true
                                 },
 
                                 yaxis: {
-                                    title: "Number of Patients"
+                                    title: {
+                                        text: "Number of Patients",
+                                        font: {
+                                            color: "#000000",
+                                            size: 14,                                        
+                                            family: "Arial, sans-serif"    
+                                        },
+                                        standoff: 20
+                                    },
+                                    showticklabels: true,
+                                    tickfont: {
+                                        color: "#000000"
+                                    },
+                                    automargin: true
                                 },
 
                                 bargap: 0.05,
 
                                 margin: {
-                                    l: 70,
+                                    l: 90,
                                     r: 30,
-                                    t: 30,
-                                    b: 70
+                                    t: 60,
+                                    b: 80
                                 },
 
-                                autosize: true
+                                autosize: true,
+                                paper_bgcolor: "#ffffff",
+                                plot_bgcolor: "#ffffff"
                             }}
-                            useResizeHandler={true}
-                            style={{
-                                width: "100%",
-                                height: "400px"
-                            }}
-                            config={{
-                                responsive: true,
-                                displayModeBar: false
-                            }}
+
                         />
 
                     </section>
@@ -206,21 +255,26 @@ function App() {
 
             <section className="prediction-card">
 
-                <h2>
+                <h3>
                     Post-Stroke Survival Digital Twin
-                </h2>
+                </h3>
+
+                <p>Placebo:</p>
 
                 <div>
                     {prediction !== null
-                        ? `Placebo: ${prediction} days`
-                        : "Placebo: No prediction yet"}
+                        ? `${prediction} days`
+                        : "No prediction yet"}
                 </div>
+                <p>Treatment:</p>
 
                 <div>
                     {predictionTreat !== null
-                        ? `Treatment: ${predictionTreat} days`
-                        : "Treatment: No prediction yet"}
+                        ? `${predictionTreat} days`
+                        : "No prediction yet"}
                 </div>
+
+                <p></p>
 
                 <button
                     onClick={tryDummyData}
@@ -233,18 +287,7 @@ function App() {
 
             </section>
 
-            {(
-                <section className="outro-card">
-                    <strong>About Dataset</strong>
-                    <p>
-                        Source: https://datashare.ed.ac.uk/items/95f369ad-17a3-4032-b5ee-2f10b6fd724d
-                    </p>
-                    <p>
-                        Citation: Sandercock, P; Wardlaw, J; Lindley, R; Cohen, G; Whiteley, W. (2016). The third International Stroke Trial (IST-3), 2000-2015 [dataset]. University of Edinburgh & Edinburgh Clinical Trials Unit. https://doi.org/10.7488/ds/1350
-                    </p>                  
 
-                </section>
-            )}
 
 
         </div>

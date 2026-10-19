@@ -33,7 +33,7 @@ PredictionFeatures = create_model("PredictionFeatures",
 )
 
 # load summary of dataset
-with open(r'C:\Users\nurai\OneDrive\Documents\GitHub\StrokePrediction\summary_dict.json', "r") as f:
+with open(r'C:\Users\nurai\OneDrive\Documents\GitHub\StrokePrediction\backend\summary_dict.json', "r") as f:
     summary_dict = json.load(f)
 
 # Global variable to store the loaded model

@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import urllib.request
 import json
+from sklearn.preprocessing import OneHotEncoder
+
 
 #initialise variables
 variable_type = {
@@ -109,5 +111,37 @@ summary_dict['weights'] = df['weight'].to_list()
 with open("summary_dict.json", "w") as f:
     json.dump(summary_dict, f)
 
+# drop entries with no planned follow up after 6M and unknown death date
+df = df[(df['plan18']!=2) & (df['deathdate_unknown']!=1)]
 
+#create classification label 
+conditions = [
+    df['surv18'] < 8,
+    df['surv18'] < 184,
+    df['surv18'] >= 143
+]
 
+df['surv18_class'] = np.select(conditions, ["7 days", "6 months", "18 months"], default="Unknown")
+
+#format data
+df['age'] = df['age'].round()
+
+#define predictor columns
+clean_df = df[[target]+variable_type['metadata_var']+variable_type['randomisation_var']+['itt_treat']]
+#drop columns 
+clean_df.drop(columns=['randhosp_id', 'randpat_id', 'trialphase', 'agecat', 'ageimp', 'age_true', 'UKextra',
+                     #   'gotbolus', 'infus_start', 'infus_halt', 'totdose', 'nostartcode', 'treatment', 'haltcode',
+                       'randvioltype'], inplace=True)
+
+# drop rows with missing values
+clean_df.dropna(how="any", inplace=True)
+
+# OHE string columns
+encoder = OneHotEncoder(sparse_output=False)
+encoded = encoder.fit_transform(clean_df[['country']])
+encoded_df = pd.DataFrame(encoded,columns=encoder.get_feature_names_out(['country']),index=clean_df.index)
+
+# join OHE columns to cleaned df
+clean_df = clean_df.join(encoded_df).drop(['country'], axis=1)
+
+clean_df.to_csv(r"C:\Users\nurai\OneDrive\Documents\GitHub\StrokePrediction\data\preprocessed.csv", index=False)
