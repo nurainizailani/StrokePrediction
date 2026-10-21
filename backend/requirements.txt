@@ -1,0 +1,8 @@
+pandas==2.2.3
+fastapi==0.141.1
+pydantic==2.13.4
+joblib==1.5.1
+jsonschema==4.24.0
+jsonschema-specifications==2025.4.1
+fastapi_cors==0.0.6
+uvicorn==0.52.1
