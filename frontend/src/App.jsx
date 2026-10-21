@@ -48,7 +48,7 @@ function App() {
 
             // Load dummy data
             const dummyResponse = await fetch(
-                '/dummy_data.json'
+                `${import.meta.env.BASE_URL}dummy_data.json`
             );
 
             const dummyData = await dummyResponse.json();
