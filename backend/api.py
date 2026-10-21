@@ -13,13 +13,17 @@ app = FastAPI()
 # add CORS middleware to allow requests from frontend to backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",         
+        "https://nurainizailani.github.io",
+                   ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 model_folder_path = os.path.join(os.getcwd(), os.path.join("backend","model"))
+backend_folder_path = os.path.join(os.getcwd(), "backend")
 
 # load feature names
 with open(os.path.join(model_folder_path,"feature_names.json"), "r") as f:
@@ -33,7 +37,7 @@ PredictionFeatures = create_model("PredictionFeatures",
 )
 
 # load summary of dataset
-with open(r'C:\Users\nurai\OneDrive\Documents\GitHub\StrokePrediction\backend\summary_dict.json', "r") as f:
+with open(backend_folder_path, "r") as f:
     summary_dict = json.load(f)
 
 # Global variable to store the loaded model
