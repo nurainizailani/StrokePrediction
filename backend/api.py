@@ -37,7 +37,7 @@ PredictionFeatures = create_model("PredictionFeatures",
 )
 
 # load summary of dataset
-with open(backend_folder_path, "r") as f:
+with open(os.path.join(backend_folder_path, "summary_dict.json"), "r") as f:
     summary_dict = json.load(f)
 
 # Global variable to store the loaded model
