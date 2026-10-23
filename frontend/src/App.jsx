@@ -102,11 +102,11 @@ function App() {
             {(
                 <section className="dataset-card">
 
-                    <h1 href="https://datashare.ed.ac.uk/items/95f369ad-17a3-4032-b5ee-2f10b6fd724d">
+                    <h1>
                         The Third International Stroke Trial (IST-3)
-                    </h1>                    
-                    <a href="https://datashare.ed.ac.uk/items/95f369ad-17a3-4032-b5ee-2f10b6fd724d">
-                        Source
+                    </h1>    
+                    <a href="https://github.com/nurainizailani/StrokePrediction">
+                        View Code on Github
                     </a> 
                     <h2>
                         Objective
@@ -124,7 +124,10 @@ function App() {
                     </p>
                     <h4>
                         Citation: Sandercock, P; Wardlaw, J; Lindley, R; Cohen, G; Whiteley, W. (2016). The third International Stroke Trial (IST-3), 2000-2015 [dataset]. University of Edinburgh & Edinburgh Clinical Trials Unit. https://doi.org/10.7488/ds/1350
-                    </h4>                 
+                    </h4>           
+                    <a href="https://datashare.ed.ac.uk/items/95f369ad-17a3-4032-b5ee-2f10b6fd724d">
+                        Data Source
+                    </a>                 
 
                 </section>
             )}
